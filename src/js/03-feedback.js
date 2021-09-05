@@ -36,7 +36,11 @@ function handleSubmit(event) {
   const {
     elements: { email, message },
   } = event.currentTarget;
+  localStorage.clear();
 
   console.log(`Email: ${email.value}, Message: ${message.value}`);
   event.currentTarget.reset();
 }
+
+//const result = _.add(2, 3);
+//console.log(result);
