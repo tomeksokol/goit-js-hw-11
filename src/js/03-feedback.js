@@ -1,28 +1,42 @@
-console.log('hello');
-
 const form = document.querySelector('.feedback-form');
-console.log(form);
-const email = document.querySelector('input');
-console.log(email);
-const message = document.querySelector('textarea');
-console.log(message);
-const send = document.querySelector('button');
-console.log(send);
 
-// const form = document.querySelector("#message-form");
-// const output = document.querySelector("#output");
-// const LOCALSTORAGE_KEY = "goit-example-message";
+const message = '';
+const email = '';
 
-// updateOutput();
-// form.addEventListener("submit", saveMessage);
+const emailInput = document.querySelector('.feedback-form input');
 
-// function saveMessage(evt) {
-//   evt.preventDefault();
-//   localStorage.setItem(LOCALSTORAGE_KEY, form.elements.message.value);
-//   updateOutput();
-//   form.reset();
-// }
+const textMessage = document.querySelector('textarea');
 
-// function updateOutput() {
-//   output.textContent = localStorage.getItem(LOCALSTORAGE_KEY) || "";
-// }
+updateOutput();
+
+form.addEventListener('input', saveData);
+
+function saveData(evt) {
+  evt.preventDefault();
+  const {
+    elements: { email, message },
+  } = evt.currentTarget;
+  localStorage.setItem('email', email.value);
+  console.log(form.elements.email.value);
+  localStorage.setItem('message', message.value);
+  console.log(form.elements.message.value);
+  updateOutput();
+  // form.reset();
+}
+
+function updateOutput() {
+  emailInput.textContent = localStorage.getItem('email');
+  textMessage.textContent = localStorage.getItem('message');
+}
+
+form.addEventListener('submit', handleSubmit);
+
+function handleSubmit(event) {
+  event.preventDefault();
+  const {
+    elements: { email, message },
+  } = event.currentTarget;
+
+  console.log(`Email: ${email.value}, Message: ${message.value}`);
+  event.currentTarget.reset();
+}
