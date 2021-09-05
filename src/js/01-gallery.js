@@ -1,3 +1,5 @@
+'use strict';
+
 // Add imports above this line
 import { galleryItems } from './gallery-items';
 import _default from '../../node_modules/simplelightbox/dist/simple-lightbox';
