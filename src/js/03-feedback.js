@@ -1,6 +1,9 @@
 'use strict';
 
 //import _throttle from '../../node_modules/lodash.throttle/index';
+//import _throttle from '../../node_modules/lodash.throttle/index';
+//import _default from '../../node_modules/lodash.throttle/index';
+//import { throttle } from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
 const emailInput = document.querySelector('input');
@@ -20,8 +23,8 @@ function saveData(evt) {
 }
 
 function updateOutput() {
-  emailInput.textContent = localStorage.getItem('email') || '';
-  textMessage.textContent = localStorage.getItem('message') || '';
+  emailInput.textContent = localStorage.getItem('email');
+  textMessage.textContent = localStorage.getItem('message');
 }
 
 form.addEventListener('submit', handleSubmit);
