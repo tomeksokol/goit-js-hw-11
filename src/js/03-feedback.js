@@ -9,23 +9,25 @@ const form = document.querySelector('.feedback-form');
 const emailInput = document.querySelector('input');
 const textMessage = document.querySelector('textarea');
 
-updateOutput();
+// const throttFunction = throttle(() => {
+//   console.log('Throttle used');
+// }, 5000);
+// throttFunction();
 
-form.addEventListener(
-  'input',
-  saveData,
-  throttle(() => {
-    console.log(form.elements.email.value);
-  }, 500),
-);
+//updateOutput();
+
+form.addEventListener('input', throttle(saveData, 2000, { trailing: true }));
+
+updateOutput();
 
 function saveData(evt) {
   evt.preventDefault();
   localStorage.setItem('email', form.elements.email.value);
+
   console.log(form.elements.email.value);
   localStorage.setItem('message', form.elements.message.value);
   console.log(form.elements.message.value);
-  updateOutput();
+  //updateOutput();
 }
 
 function updateOutput() {
@@ -45,4 +47,5 @@ function handleSubmit(event) {
   event.currentTarget.reset();
   form.reset();
   localStorage.clear();
+  updateOutput();
 }
