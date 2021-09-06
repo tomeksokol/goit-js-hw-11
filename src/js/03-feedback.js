@@ -1,3 +1,7 @@
+'use strict';
+
+//import _throttle from '../../node_modules/lodash.throttle/index';
+
 const form = document.querySelector('.feedback-form');
 const emailInput = document.querySelector('input');
 const textMessage = document.querySelector('textarea');
@@ -27,9 +31,9 @@ function handleSubmit(event) {
   const {
     elements: { email, message },
   } = event.currentTarget;
-  localStorage.clear();
 
   console.log(`Email: ${email.value}, Message: ${message.value}`);
   event.currentTarget.reset();
-  textMessage.reset();
+  form.reset();
+  localStorage.clear();
 }
