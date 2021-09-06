@@ -3,7 +3,7 @@
 //import _throttle from '../../node_modules/lodash.throttle/index';
 //import _throttle from '../../node_modules/lodash.throttle/index';
 //import _default from '../../node_modules/lodash.throttle/index';
-//import { throttle } from 'lodash.throttle';
+import throttle from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
 const emailInput = document.querySelector('input');
@@ -11,7 +11,13 @@ const textMessage = document.querySelector('textarea');
 
 updateOutput();
 
-form.addEventListener('input', saveData);
+form.addEventListener(
+  'input',
+  saveData,
+  throttle(() => {
+    console.log(form.elements.email.value);
+  }, 500),
+);
 
 function saveData(evt) {
   evt.preventDefault();
