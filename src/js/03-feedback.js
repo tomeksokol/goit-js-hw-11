@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 //import _throttle from '../../node_modules/lodash.throttle/index';
 //import _throttle from '../../node_modules/lodash.throttle/index';
