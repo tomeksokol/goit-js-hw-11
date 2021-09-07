@@ -1,22 +1,12 @@
-//'use strict';
+'use strict';
 
-//import _throttle from '../../node_modules/lodash.throttle/index';
-//import _throttle from '../../node_modules/lodash.throttle/index';
-//import _default from '../../node_modules/lodash.throttle/index';
 import throttle from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
 const emailInput = document.querySelector('input');
 const textMessage = document.querySelector('textarea');
 
-// const throttFunction = throttle(() => {
-//   console.log('Throttle used');
-// }, 5000);
-// throttFunction();
-
-//updateOutput();
-
-form.addEventListener('input', throttle(saveData, 2000, { trailing: true }));
+form.addEventListener('input', throttle(saveData, 500, { trailing: true }));
 
 updateOutput();
 
@@ -27,7 +17,6 @@ function saveData(evt) {
   console.log(form.elements.email.value);
   localStorage.setItem('message', form.elements.message.value);
   console.log(form.elements.message.value);
-  //updateOutput();
 }
 
 function updateOutput() {
