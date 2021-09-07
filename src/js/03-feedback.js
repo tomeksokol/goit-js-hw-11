@@ -3,7 +3,7 @@
 import throttle from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
-const input = document.querySelector('input[name="email"]');
+const input = document.querySelector('[name="email"]');
 const textarea = document.querySelector('textarea');
 
 form.addEventListener('input', throttle(saveData, 500, { trailing: true }));
@@ -20,7 +20,7 @@ function saveData(evt) {
 }
 
 function updateOutput() {
-  input.textContent = localStorage.getItem('email');
+  input.value = localStorage.getItem('email');
   textarea.textContent = localStorage.getItem('message');
 }
 
