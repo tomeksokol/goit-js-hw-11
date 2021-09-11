@@ -5,7 +5,8 @@ function getRandomHexColor() {
 }
 const body = document.querySelector('body');
 const buttons = document.querySelectorAll('button');
-console.log(buttons);
+console.log(buttons[0]);
+console.log(buttons[1]);
 const startBtn = document.querySelector('button[data-start]');
 const stopBtn = document.querySelector('button[data-stop]');
 
@@ -54,3 +55,18 @@ stopBtn.style.position = 'absolute';
 stopBtn.style.top = '50%';
 stopBtn.style.left = '56%';
 stopBtn.style.transform = 'translate(-50%, -50%)';
+
+//wrapper
+// const wrapAll = (target, wrapper) => {
+//   [...target.nextElementSibling].forEach(child => wrapper.appendChild(child));
+//   target.appendChild(wrapper);
+//   return wrapper;
+// };
+// wrapAll(buttons, document.createElement('div'));
+// const wrap = function (toWrap, wrapper) {
+//   wrapper = document.createElement('div');
+//   wrapper.classList.add('wrap');
+//   toWrap.parentNode.append(wrapper);
+//   return wrapper.append(toWrap);
+// };
+// wrap(startBtn, document.createElement('div'));
