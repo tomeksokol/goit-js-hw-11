@@ -14,10 +14,12 @@ let bqrColor = '#fffff';
 //START
 
 const startInterval = evt => {
+  stopBtn.disabled = false;
   bqrColor = setInterval(() => {
     body.style.backgroundColor = getRandomHexColor();
     console.log(bqrColor);
   }, 1000);
+  startBtn.disabled = true;
 };
 
 startBtn.addEventListener('click', startInterval);
@@ -26,6 +28,8 @@ startBtn.addEventListener('click', startInterval);
 
 const stopInterval = evt => {
   clearInterval(bqrColor);
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
 };
 
 stopBtn.addEventListener('click', stopInterval);
@@ -35,10 +39,16 @@ stopBtn.addEventListener('click', stopInterval);
 startBtn.style.width = '70px';
 startBtn.style.height = '40px';
 startBtn.style.textTransform = 'uppercase';
+startBtn.style.marginLeft = 'calc(50vw - 150px)';
+startBtn.style.marginTop = 'calc(25vw - 10px)';
 
 stopBtn.style.width = '70px';
 stopBtn.style.height = '40px';
 stopBtn.style.textTransform = 'uppercase';
+
+// wrapper
+
+// console.log(buttons.children);
 
 // function wrap(el, wrapper) {
 //   el.parentNode.insertBefore(wrapper, el);
