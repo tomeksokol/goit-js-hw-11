@@ -11,7 +11,7 @@ const startDate = document.querySelector('#datetime-picker');
 const startBtn = document.querySelector('button[data-start]');
 startBtn.disabled = true;
 const daysOutput = document.querySelector('.timer span[data-days]');
-//const hoursOutput = document.querySelector('.field span[data-hours]');
+const hoursOutput = document.querySelector('.field span[data-hours]');
 const minutesOutput = document.querySelector('.field span[data-minutes]');
 const secondsOutput = document.querySelector('.field span[data-seconds');
 let utcTime = null;
@@ -39,6 +39,10 @@ const options = {
         let currentTime = setInterval(() => {
           let ms = selectedUtcDate - new Date().getTime();
           console.log(ms);
+
+          convertMs(ms);
+          console.log(convertMs(ms));
+          daysOutput.textContent = `${convertMs(ms)}`;
         }, 1000);
       };
 
