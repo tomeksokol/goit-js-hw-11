@@ -7,7 +7,8 @@ import Notiflix from 'notiflix';
 
 const startDate = document.querySelector('#datetime-picker');
 const startBtn = document.querySelector('button[data-start]');
-startBtn.disabled = true;
+const countdownContainer = document.querySelector('.timer');
+const field = document.querySelectorAll('.field');
 const daysOutput = document.querySelector('.timer span[data-days]');
 const hoursOutput = document.querySelector('.field span[data-hours]');
 const minutesOutput = document.querySelector('.field span[data-minutes]');
@@ -17,6 +18,8 @@ const second = 1000;
 const minute = second * 60;
 const hour = minute * 60;
 const day = hour * 24;
+
+startBtn.disabled = true;
 
 const options = {
   enableTime: true,
@@ -76,3 +79,28 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
+
+//countdown styles
+startDate.style.fontSize = '25px';
+startDate.style.marginBottom = '30px';
+startBtn.style.fontSize = '25px';
+countdownContainer.style.display = 'flex';
+countdownContainer.style.fontSize = '30px';
+field[0].style.display = 'flex';
+field[0].style.flexDirection = 'column';
+field[0].style.alignItems = 'center';
+field[0].style.marginRight = '25px';
+field[1].style.display = 'flex';
+field[1].style.flexDirection = 'column';
+field[1].style.alignItems = 'center';
+field[1].style.marginRight = '25px';
+field[2].style.display = 'flex';
+field[2].style.flexDirection = 'column';
+field[2].style.alignItems = 'center';
+field[2].style.marginRight = '25px';
+field[3].style.display = 'flex';
+field[3].style.flexDirection = 'column';
+field[3].style.alignItems = 'center';
+field[3].style.marginRight = '25px';
+
+//forEach
