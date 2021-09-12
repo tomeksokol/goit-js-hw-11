@@ -10,6 +10,11 @@ import Notiflix from 'notiflix';
 const startDate = document.querySelector('#datetime-picker');
 const startBtn = document.querySelector('button[data-start]');
 startBtn.disabled = true;
+const daysOutput = document.querySelector('.timer span[data-days]');
+//const hoursOutput = document.querySelector('.field span[data-hours]');
+const minutesOutput = document.querySelector('.field span[data-minutes]');
+const secondsOutput = document.querySelector('.field span[data-seconds');
+let utcTime = null;
 
 const options = {
   enableTime: true,
@@ -17,12 +22,27 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
-    if (selectedDates[0] < new Date()) {
+    let selectedUtcDate = selectedDates[0].getTime();
+    let date = new Date();
+    let todayUtcDate = date.getTime();
+    //console.log(selectedUtcDate);
+    //console.log(todayUtcDate);
+    let msLeft = selectedUtcDate - todayUtcDate;
+    //console.log(msLeft);
+    if (selectedUtcDate < todayUtcDate) {
       Notiflix.Notify.failure('Please choose a date in the future');
-      // startBtn.disabled = true;
+      startBtn.disabled = true;
     } else {
       startBtn.disabled = false;
+      const countdown = evt => {
+        evt.preventDefault();
+        let currentTime = setInterval(() => {
+          let ms = selectedUtcDate - new Date().getTime();
+          console.log(ms);
+        }, 1000);
+      };
+
+      startBtn.addEventListener('click', countdown);
     }
   },
 };
@@ -48,6 +68,6 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+// console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
+// console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
+// console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
