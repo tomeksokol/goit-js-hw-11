@@ -9,6 +9,7 @@ const startDate = document.querySelector('#datetime-picker');
 const startBtn = document.querySelector('button[data-start]');
 const countdownContainer = document.querySelector('.timer');
 const field = document.querySelectorAll('.field');
+const numberValue = document.querySelectorAll('.field .value');
 const daysOutput = document.querySelector('.timer span[data-days]');
 const hoursOutput = document.querySelector('.field span[data-hours]');
 const minutesOutput = document.querySelector('.field span[data-minutes]');
@@ -30,10 +31,7 @@ const options = {
     let selectedUtcDate = selectedDates[0].getTime();
     let date = new Date();
     let todayUtcDate = date.getTime();
-    //console.log(selectedUtcDate);
-    //console.log(todayUtcDate);
-    let msLeft = selectedUtcDate - todayUtcDate;
-    //console.log(msLeft);
+
     if (selectedUtcDate < todayUtcDate) {
       Notiflix.Notify.failure('Please choose a date in the future');
       startBtn.disabled = true;
@@ -41,16 +39,28 @@ const options = {
       startBtn.disabled = false;
       const countdown = evt => {
         evt.preventDefault();
-        let currentTime = setInterval(() => {
+        const currentCounter = setInterval(() => {
           let ms = selectedUtcDate - new Date().getTime();
           console.log(ms);
-
+          startBtn.disabled = true;
           convertMs(ms);
           console.log(convertMs(ms));
-          daysOutput.textContent = String(Math.floor(ms / day));
-          hoursOutput.textContent = String(Math.floor((ms % day) / hour));
-          minutesOutput.textContent = String(Math.floor(((ms % day) % hour) / minute));
-          secondsOutput.textContent = String(Math.floor((((ms % day) % hour) % minute) / second));
+
+          daysOutput.textContent = addLeadingZero(String(convertMs(ms).days));
+          hoursOutput.textContent = addLeadingZero(String(convertMs(ms).hours));
+          minutesOutput.textContent = addLeadingZero(String(convertMs(ms).minutes));
+          secondsOutput.textContent = addLeadingZero(String(convertMs(ms).seconds));
+
+          if (
+            convertMs(ms).days === 0 &&
+            convertMs(ms).hours === 0 &&
+            convertMs(ms).minutes === 0 &&
+            convertMs(ms).seconds === 0
+          ) {
+            console.log('Counter stop');
+            clearInterval(currentCounter);
+            countdownContainer.style.color = 'red';
+          }
         }, 1000);
       };
 
@@ -80,27 +90,27 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
+function addLeadingZero(value) {
+  if (value < 10) {
+    return value.padStart(2, '0');
+  } else {
+    return value;
+  }
+}
+
 //countdown styles
 startDate.style.fontSize = '25px';
 startDate.style.marginBottom = '30px';
 startBtn.style.fontSize = '25px';
 countdownContainer.style.display = 'flex';
-countdownContainer.style.fontSize = '30px';
-field[0].style.display = 'flex';
-field[0].style.flexDirection = 'column';
-field[0].style.alignItems = 'center';
-field[0].style.marginRight = '25px';
-field[1].style.display = 'flex';
-field[1].style.flexDirection = 'column';
-field[1].style.alignItems = 'center';
-field[1].style.marginRight = '25px';
-field[2].style.display = 'flex';
-field[2].style.flexDirection = 'column';
-field[2].style.alignItems = 'center';
-field[2].style.marginRight = '25px';
-field[3].style.display = 'flex';
-field[3].style.flexDirection = 'column';
-field[3].style.alignItems = 'center';
-field[3].style.marginRight = '25px';
 
-//forEach
+field.forEach(item => {
+  item.style.display = 'flex';
+  item.style.flexDirection = 'column';
+  item.style.alignItems = 'center';
+  item.style.marginRight = '25px';
+  item.style.textTransform = 'uppercase';
+  item.style.fontWeight = '500';
+});
+
+numberValue.forEach(val => (val.style.fontSize = '40px'));

@@ -40,21 +40,13 @@ stopBtn.addEventListener('click', stopInterval);
 startBtn.style.width = '70px';
 startBtn.style.height = '40px';
 startBtn.style.textTransform = 'uppercase';
-startBtn.style.position = 'absolute';
-startBtn.style.top = '50%';
-startBtn.style.left = '50%';
-startBtn.style.transform = 'translate(-50%, -50%)';
 
-// startBtn.style.marginLeft = 'calc(50vw - 150px)';
-// startBtn.style.marginTop = 'calc(25vw - 10px)';
+startBtn.style.marginLeft = 'calc(50vw - 150px)';
+startBtn.style.marginTop = 'calc(25vw - 10px)';
 
 stopBtn.style.width = '70px';
 stopBtn.style.height = '40px';
 stopBtn.style.textTransform = 'uppercase';
-stopBtn.style.position = 'absolute';
-stopBtn.style.top = '50%';
-stopBtn.style.left = '56%';
-stopBtn.style.transform = 'translate(-50%, -50%)';
 
 //wrapper
 // const wrapAll = (target, wrapper) => {
