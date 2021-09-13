@@ -3,6 +3,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 require('flatpickr/dist/themes/material_blue.css');
+import { Polish } from 'flatpickr/dist/l10n/pl.js';
 import Notiflix from 'notiflix';
 
 const startDate = document.querySelector('#datetime-picker');
@@ -27,6 +28,7 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
+  locale: 'pl',
 
   onClose(selectedDates) {
     let selectedUtcDate = selectedDates[0].getTime();
