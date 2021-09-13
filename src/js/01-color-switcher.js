@@ -47,18 +47,3 @@ startBtn.style.marginTop = 'calc(25vw - 10px)';
 stopBtn.style.width = '70px';
 stopBtn.style.height = '40px';
 stopBtn.style.textTransform = 'uppercase';
-
-//wrapper
-// const wrapAll = (target, wrapper) => {
-//   [...target.nextElementSibling].forEach(child => wrapper.appendChild(child));
-//   target.appendChild(wrapper);
-//   return wrapper;
-// };
-// wrapAll(buttons, document.createElement('div'));
-// const wrap = function (toWrap, wrapper) {
-//   wrapper = document.createElement('div');
-//   wrapper.classList.add('wrap');
-//   toWrap.parentNode.append(wrapper);
-//   return wrapper.append(toWrap);
-// };
-// wrap(startBtn, document.createElement('div'));
