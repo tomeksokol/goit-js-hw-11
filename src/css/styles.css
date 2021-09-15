@@ -8,6 +8,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
+  background-image: url('../images/background_img.jpg');
   color: #212121;
   line-height: 1.5;
 }
