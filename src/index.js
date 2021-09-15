@@ -6,7 +6,7 @@ const searchingBox = document.querySelector('#search-box');
 const background = document.querySelector('body');
 
 //country searching styles
-background.style.backgroundImage = "url('../images/background_img.jpg')";
+//document.body.style.backgroundImage = "url('./images/background_img.jpg')";
 // Add a box shadow on focus
 searchingBox.addEventListener('focus', e => {
   e.target.style.outline = 'none';

@@ -9,6 +9,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
   /* background-image: url('../images/background_img.jpg'); */
+  background-image: radial-gradient(#707070 10%, transparent 20%);
+
+  background-size: 60px 60px;
   color: #212121;
   line-height: 1.5;
 }
