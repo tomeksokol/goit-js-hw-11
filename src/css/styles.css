@@ -8,8 +8,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
-  /* background-image: radial-gradient(#a1a0a0 1%, transparent 10%);
-  background-size: 70px 70px; */
   color: #212121;
   line-height: 1.5;
 }
@@ -17,6 +15,6 @@ body {
 #search-box {
   font: inherit;
   padding: 8px;
-  max-width: 320px; 
+  max-width: 320px;
   margin-bottom: 16px;
 }
