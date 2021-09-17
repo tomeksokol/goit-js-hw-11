@@ -5,6 +5,13 @@ const DEBOUNCE_DELAY = 300;
 const searchingBox = document.querySelector('#search-box');
 const background = document.querySelector('body');
 
+// 1) Create function fetching data Countries
+// 1a) Create const url
+// 1b) Create URLSearchParams
+// 1c) Add headers to fetch
+// 2) Create add Event listener
+// 3) Create function rendering data
+
 //STYLES
 
 //background image style
