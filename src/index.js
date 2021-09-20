@@ -12,7 +12,7 @@ const countryLIst = document.querySelector('.country-list');
 const countryInfo = document.querySelector('.country-info');
 
 function eventHandler(event) {
-  let name = event.currentTarget.value;
+  let name = event.target.value.trim();
   console.log(fetchCountries(name));
   if (name === '') {
     Notiflix.Notify.success('Please enter a country name.');
@@ -41,8 +41,7 @@ function eventHandler(event) {
   }
 }
 
-//searchingBox.addEventListener('input', debounce(eventHandler, DEBOUNCE_DELAY));
-searchingBox.addEventListener('input', eventHandler);
+searchingBox.addEventListener('input', debounce(eventHandler, DEBOUNCE_DELAY));
 
 function renderCountryList(name) {
   const markup = name

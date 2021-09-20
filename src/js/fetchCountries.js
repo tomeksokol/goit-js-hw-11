@@ -1,5 +1,5 @@
 function fetchCountries(name) {
-  name = name.trim();
+  //name = name.trim();
   if (name === '') {
     console.log("Please enter a country name.");
   } else {
