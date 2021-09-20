@@ -43,7 +43,7 @@ const eventHandler = event => {
   }
 };
 
-// searchingBox.addEventListener('input', debounce(eventHandler, 300));
+// searchingBox.addEventListener('input', debounce(eventHandler, DEBOUNCE_DELAY));
 searchingBox.addEventListener('input', eventHandler);
 
 function renderCountryList(name) {

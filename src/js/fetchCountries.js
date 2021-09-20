@@ -1,5 +1,8 @@
 function fetchCountries(name) {
   name = name.trim();
+  if (name === '') {
+    console.log("Please enter a country name.");
+  } else {
   return fetch(
     `https://restcountries.eu/rest/v2/name/${name}?fields=name;capital;population;flag;languages`,
   ).then(response => {
@@ -8,5 +11,6 @@ function fetchCountries(name) {
     }
     return response.json();
   });
+}
 }
 export { fetchCountries };
