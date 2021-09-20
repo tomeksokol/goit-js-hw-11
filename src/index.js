@@ -5,15 +5,13 @@ import { fetchCountries } from './js/fetchCountries';
 import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
 
+//const debounce = require('lodash.debounce');
 const DEBOUNCE_DELAY = 300;
 const searchingBox = document.querySelector('input#search-box');
-const background = document.querySelector('body');
 const countryLIst = document.querySelector('.country-list');
-//const countryItems = document.querySelector('.country__list');
 const countryInfo = document.querySelector('.country-info');
-//const countryName = document.querySelector('.country__info.country__name');
 
-const eventHandler = event => {
+function eventHandler(event) {
   let name = event.currentTarget.value;
   console.log(fetchCountries(name));
   if (name === '') {
@@ -41,9 +39,9 @@ const eventHandler = event => {
         countryInfo.style.display = 'none';
       });
   }
-};
+}
 
-// searchingBox.addEventListener('input', debounce(eventHandler, DEBOUNCE_DELAY));
+//searchingBox.addEventListener('input', debounce(eventHandler, DEBOUNCE_DELAY));
 searchingBox.addEventListener('input', eventHandler);
 
 function renderCountryList(name) {
@@ -72,16 +70,6 @@ function renderCountryInfo(name) {
     .join('');
   countryInfo.innerHTML = markup;
 }
-
-// function countryListClear() {
-//   return '<li></li>';
-// }
-// 1) Create function fetching data Countries
-// 1a) Create const url
-// 1b) Create URLSearchParams
-// 1c) Add headers to fetch
-// 2) Create add Event listener
-// 3) Create function rendering data
 
 //STYLES
 
