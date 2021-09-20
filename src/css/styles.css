@@ -18,3 +18,23 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+
+.country__list {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.country__list > .country__name {
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+.flag__img {
+  padding-top: 5px;
+}
+
+.country__info > .country__name {
+  font-weight: 700;
+  font-size: 45px;
+  margin-left: 10px;
+}

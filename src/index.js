@@ -9,7 +9,9 @@ const DEBOUNCE_DELAY = 300;
 const searchingBox = document.querySelector('input#search-box');
 const background = document.querySelector('body');
 const countryLIst = document.querySelector('.country-list');
+//const countryItems = document.querySelector('.country__list');
 const countryInfo = document.querySelector('.country-info');
+//const countryName = document.querySelector('.country__info.country__name');
 
 const eventHandler = event => {
   let name = event.currentTarget.value;
@@ -48,7 +50,7 @@ function renderCountryList(name) {
   const markup = name
     .map(country => {
       return `<li class="country__list">
-          <img class="flag__img" src="${country.flag}" alt="Flag of ${country.name}" width="50" height="30"><span class="country__name">${country.name}<span></img>
+          <img class="flag__img" src="${country.flag}" alt="Flag of ${country.name}" width="50" height="30"><span class="country__name">${country.name}</span></img>
         </li>`;
     })
     .join('');
@@ -59,10 +61,12 @@ function renderCountryInfo(name) {
   const markup = name
     .map(country => {
       return `<li class="country__info">
-          <img class="flag__img" src="${country.flag}" alt="Flag of ${country.name}" width="50" height="30"><span class="country__name">${country.name}<span></img>
+          <img class="flag__img" src="${country.flag}" alt="Flag of ${
+        country.name
+      }" width="50" height="30"><span class="country__name">${country.name}</span></img>
           <p><b>Capital</b>: ${country.capital}</p>
           <p><b>Population</b>: ${country.population}</p>
-          <p><b>Languages</b>: ${country.languages[0].name}</p>
+          <p><b>Languages</b>: ${country.languages.map(language => ' ' + language.name)}</p>
         </li>`;
     })
     .join('');
@@ -101,3 +105,13 @@ searchingBox.style.marginTop = '20px';
 searchingBox.style.maxWidth = 'none';
 searchingBox.style.width = '650px';
 searchingBox.style.height = '70px';
+//styles of country info
+countryInfo.style.fontSize = '30px';
+countryInfo.style.marginTop = '30px';
+countryInfo.style.marginLeft = '20px';
+//countryName.style.fontWeight = '900px';
+
+//styles of country list
+countryLIst.style.marginLeft = '20px';
+countryLIst.style.fontSize = '20px';
+countryLIst.style.padding = '0';
