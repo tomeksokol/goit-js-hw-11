@@ -18,6 +18,9 @@ const gallery = document.querySelector('.gallery');
 
 // const searchingResults = async event => {
 //   let name = event.target.value;
+//   fetchImages()
+//   .then(photos => console.log(photos))
+//   .catch(error => console.log(error));
 //   console.log(photos);
 //   console.log(fetchImages(name));
 //   try {
@@ -43,17 +46,17 @@ function searchingResults(event) {
   let name = event.target.value;
   console.log(fetchPhotos(name));
   fetchPhotos(name)
-    .then(name => renderGallery(name))
+    .then(name => console.log(name))
     .catch(error => console.log(error));
 }
 
 searchBtn.addEventListener('click', searchingResults);
 
-function renderGallery(name) {
-  const markup = name
-    .map(hits => {
-      return `<li> ${hits.id}</li>`;
-    })
-    .join('');
-  gallery.innerHTML = markup;
-}
+// function renderGallery(name) {
+//   const markup = name
+//     .map(hits => {
+//       return `<li> ${hits}</li>`;
+//     })
+//     .join('');
+//   gallery.innerHTML = markup;
+// }
