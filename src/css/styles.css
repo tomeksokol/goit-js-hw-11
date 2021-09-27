@@ -10,31 +10,42 @@ body {
   background-color: #fafafa;
   color: #212121;
   line-height: 1.5;
+  margin: 0;
 }
 
-#search-box {
+/* #search-box {
   font: inherit;
   padding: 8px;
   max-width: 320px;
   margin-bottom: 16px;
+} */
+
+.searching-box {
+  display: flex;
+  background-color: midnightblue;
+  justify-content: center;
+  align-items: center;
 }
 
-.country__list {
-  margin-bottom: 10px;
-  font-size: 20px;
+.search-form {
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.country__list > .country__name {
-  font-weight: 600;
-  margin-left: 10px;
+input {
+  width: 300px;
+  height: 32px;
+  border: none;
+  border-radius: 5px 0 0 5px;
 }
 
-.flag__img {
-  padding-top: 5px;
-}
-
-.country__info > .country__name {
-  font-weight: 700;
-  font-size: 45px;
-  margin-left: 10px;
+.search-btn {
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
 }
