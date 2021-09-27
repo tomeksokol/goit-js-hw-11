@@ -13,13 +13,6 @@ body {
   margin: 0;
 }
 
-/* #search-box {
-  font: inherit;
-  padding: 8px;
-  max-width: 320px;
-  margin-bottom: 16px;
-} */
-
 .searching-box {
   display: flex;
   background-color: midnightblue;
@@ -38,6 +31,8 @@ input {
   height: 32px;
   border: none;
   border-radius: 5px 0 0 5px;
+  padding: 8px;
+  outline: none;
 }
 
 .search-btn {
