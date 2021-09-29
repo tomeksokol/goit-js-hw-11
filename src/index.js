@@ -4,20 +4,34 @@ import './css/styles.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
+import axios from 'axios';
 
 const searchgBox = document.querySelector('input');
 const searchBtn = document.querySelector('.search-btn');
 const searchForm = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
+const clear = elems => [...elems.children].forEach(div => div.remove());
+
+// async function fetchImages(name) {
+//   const response = await fetch(
+//     `https://pixabay.com/api/?key=23580980-4f75151f85975025bb6074227&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40`,
+//   );
+//   if (!response.ok) {
+//     throw new Error(response.status);
+//   }
+//   return await response.json();
+// }
 
 async function fetchImages(name) {
-  const response = await fetch(
-    `https://pixabay.com/api/?key=23580980-4f75151f85975025bb6074227&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40`,
-  );
-  if (!response.ok) {
-    throw new Error(response.status);
+  try {
+    const response = await axios.get(
+      `https://pixabay.com/api/?key=23580980-4f75151f85975025bb6074227&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40`,
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
   }
-  return await response.json();
 }
 
 async function eventHandler(ev) {
@@ -31,6 +45,7 @@ async function eventHandler(ev) {
   const fetching = await fetchImages(name)
     .then(name => {
       console.log(name.hits.length);
+      console.log(name);
       if (name.hits.length > 0) {
         Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
         renderGallery(name);
@@ -39,6 +54,7 @@ async function eventHandler(ev) {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.',
         );
+        clear(gallery); //reset view in case of failure
       }
     })
     .catch(error => console.log(error));
@@ -69,4 +85,4 @@ function renderGallery(name) {
     })
     .join('');
   gallery.innerHTML = markup;
-};
+}
