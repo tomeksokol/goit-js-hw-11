@@ -11,6 +11,8 @@ const searchBtn = document.querySelector('.search-btn');
 const searchForm = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
 const clear = elems => [...elems.children].forEach(div => div.remove());
+const loadBtn = document.querySelector('.load-more');
+let page = 1;
 
 // async function fetchImages(name) {
 //   const response = await fetch(
@@ -22,16 +24,17 @@ const clear = elems => [...elems.children].forEach(div => div.remove());
 //   return await response.json();
 // }
 
-async function fetchImages(name) {
+async function fetchImages(name, page) {
   try {
     const response = await axios.get(
-      `https://pixabay.com/api/?key=23580980-4f75151f85975025bb6074227&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40`,
+      `https://pixabay.com/api/?key=23580980-4f75151f85975025bb6074227&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`,
     );
     console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);
   }
+  page += 1;
 }
 
 async function eventHandler(ev) {
@@ -42,14 +45,24 @@ async function eventHandler(ev) {
   console.log(searchQuery.value);
   let name = searchQuery.value;
   console.log(name);
-  const fetching = await fetchImages(name)
+  const fetching = await fetchImages(name, page)
     .then(name => {
       console.log(name.hits.length);
       console.log(name);
       if (name.hits.length > 0) {
         Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
         renderGallery(name);
-        const lightbox = new SimpleLightbox('.gallery a', {});
+        const lightbox1 = new SimpleLightbox('.gallery a', {});
+        lightbox1.refresh();
+        page += 1;
+        if (page > 1) {
+          loadBtn.addEventListener('click', () => {
+            console.log('load more images');
+            fetchImages();
+            renderGallery(name);
+            //const lightbox2 = new SimpleLightbox('.gallery a', {});
+          });
+        }
       } else {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.',
@@ -84,5 +97,5 @@ function renderGallery(name) {
     </div>`;
     })
     .join('');
-  gallery.innerHTML = markup;
+  gallery.insertAdjacentHTML('beforeend', markup);
 }
