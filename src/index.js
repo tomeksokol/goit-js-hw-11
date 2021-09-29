@@ -1,7 +1,8 @@
 'use strict';
 
 import './css/styles.css';
-
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 
 const searchgBox = document.querySelector('input');
@@ -33,6 +34,7 @@ async function eventHandler(ev) {
       if (name.hits.length > 0) {
         Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
         renderGallery(name);
+        const lightbox = new SimpleLightbox('.gallery a', {});
       } else {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.',

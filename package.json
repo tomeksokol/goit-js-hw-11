@@ -27,6 +27,8 @@
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8",
-    "notiflix": "^3.0.2"
+    "notiflix": "^3.0.2",
+    "simple-lightbox": "^2.1.0",
+    "simplelightbox": "^2.8.1"
   }
 }
