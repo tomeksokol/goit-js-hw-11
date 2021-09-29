@@ -27,14 +27,13 @@ let page = 1;
 async function fetchImages(name, page) {
   try {
     const response = await axios.get(
-      `https://pixabay.com/api/?key=23580980-4f75151f85975025bb6074227&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`,
+      `https://pixabay.com/api/?key=23580980-4f75151f85975025bb6074227&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`,
     );
     console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);
   }
-  page += 1;
 }
 
 async function eventHandler(ev) {
@@ -45,22 +44,28 @@ async function eventHandler(ev) {
   console.log(searchQuery.value);
   let name = searchQuery.value;
   console.log(name);
-  const fetching = await fetchImages(name, page)
+  fetchImages(name, page)
     .then(name => {
       console.log(name.hits.length);
       console.log(name);
+
       if (name.hits.length > 0) {
         Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
         renderGallery(name);
-        const lightbox1 = new SimpleLightbox('.gallery a', {});
-        lightbox1.refresh();
         page += 1;
+        console.log(page);
+        const lightbox = new SimpleLightbox('.gallery a', {});
+
         if (page > 1) {
           loadBtn.addEventListener('click', () => {
+            let name = searchQuery.value;
             console.log('load more images');
-            fetchImages();
-            renderGallery(name);
-            //const lightbox2 = new SimpleLightbox('.gallery a', {});
+            fetchImages(name, page).then(name => {
+              renderGallery(name);
+              lightbox.refresh();
+              page += 1;
+              console.log(page);
+            });
           });
         }
       } else {
@@ -74,6 +79,8 @@ async function eventHandler(ev) {
 }
 
 searchForm.addEventListener('submit', eventHandler);
+
+//  ====== ADD ALERT ======= HIDDEN BTN======
 
 function renderGallery(name) {
   const markup = name.hits
