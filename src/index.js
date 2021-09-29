@@ -19,7 +19,6 @@ async function fetchImages(name) {
   return await response.json();
 }
 
-
 async function eventHandler(ev) {
   ev.preventDefault();
   const {
@@ -30,7 +29,6 @@ async function eventHandler(ev) {
   console.log(name);
   const fetching = await fetchImages(name)
     .then(name => {
-      console.log(name);
       console.log(name.hits.length);
       if (name.hits.length > 0) {
         Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
@@ -46,12 +44,11 @@ async function eventHandler(ev) {
 
 searchForm.addEventListener('submit', eventHandler);
 
-
 function renderGallery(name) {
   const markup = name.hits
     .map(hit => {
       return `<div class="photo-card">
-      <img src="${hit.previewURL}" alt="${hit.tags}" loading="lazy" />
+      <a class="gallery__item" href="${hit.largeImageURL}"> <img class="gallery__image" src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" /></a>
       <div class="info">
         <p class="info-item">
           <b>Likes ${hit.likes}</b>
