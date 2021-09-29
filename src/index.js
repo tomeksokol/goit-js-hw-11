@@ -19,37 +19,6 @@ async function fetchImages(name) {
   return await response.json();
 }
 
-// function fetchPhotos(name) {
-//   return fetch(
-//     `https://pixabay.com/api/?key=23580980-4f75151f85975025bb6074227&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40`,
-//   ).then(data  => data.json())
-//   .then(data => console.log(data))
-//   .catch(error => console.log(error));
-// }
-
-// function searchingResults(event) {
-//   let name = event.target.value;
-//   console.log(fetchPhotos(name));
-//   fetchPhotos(name)
-//     .then(name => console.log(name))
-//     .catch(error => console.log(error));
-// }
-
-// let input = searchgBox.addEventListener('input', e => {
-//    let inputSearch = e.target.value;
-//    console.log(inputSearch);
-//  });
-
-// const searchingResults = async event => {
-//   console.log("Button is clicked");
-//   let name = inputSearch;
-//   fetchImages(name)
-//     .then(name => console.log(name))
-//     .catch(error => console.log(error));
-//   console.log(name);
-//   console.log(name.hits[0].pageURL);
-//   console.log(fetchImages(name));
-// };
 
 async function eventHandler(ev) {
   ev.preventDefault();
@@ -65,6 +34,7 @@ async function eventHandler(ev) {
       console.log(name.hits.length);
       if (name.hits.length > 0) {
         Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
+        renderGallery(name);
       } else {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.',
@@ -75,13 +45,29 @@ async function eventHandler(ev) {
 }
 
 searchForm.addEventListener('submit', eventHandler);
-//searchBtn.addEventListener('click', searchingResults);
 
-// function renderGallery(name) {
-//   const markup = name
-//     .map(hits => {
-//       return `<li> ${hits}</li>`;
-//     })
-//     .join('');
-//   gallery.innerHTML = markup;
-// }
+
+function renderGallery(name) {
+  const markup = name.hits
+    .map(hit => {
+      return `<div class="photo-card">
+      <img src="${hit.previewURL}" alt="${hit.tags}" loading="lazy" />
+      <div class="info">
+        <p class="info-item">
+          <b>Likes ${hit.likes}</b>
+        </p>
+        <p class="info-item">
+          <b>Views ${hit.views}</b>
+        </p>
+        <p class="info-item">
+          <b>Comments ${hit.comments}</b>
+        </p>
+        <p class="info-item">
+          <b>Downloads ${hit.downloads}</b>
+        </p>
+      </div>
+    </div>`;
+    })
+    .join('');
+  gallery.innerHTML = markup;
+}
