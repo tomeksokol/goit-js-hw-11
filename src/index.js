@@ -38,6 +38,7 @@ async function fetchImages(name, page) {
 
 async function eventHandler(ev) {
   ev.preventDefault();
+  clear(gallery);
   const {
     elements: { searchQuery },
   } = ev.currentTarget;
@@ -105,5 +106,4 @@ function renderGallery(name) {
     })
     .join('');
   gallery.insertAdjacentHTML('beforeend', markup);
-  //gallery.innerHTML(markup);
 }
