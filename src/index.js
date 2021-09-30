@@ -12,17 +12,8 @@ const searchForm = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
 const clear = elems => [...elems.children].forEach(div => div.remove());
 const loadBtn = document.querySelector('.load-more');
-let page = 1;
-
-// async function fetchImages(name) {
-//   const response = await fetch(
-//     `https://pixabay.com/api/?key=23580980-4f75151f85975025bb6074227&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40`,
-//   );
-//   if (!response.ok) {
-//     throw new Error(response.status);
-//   }
-//   return await response.json();
-// }
+let perPage = 40;
+let page = 0;
 
 async function fetchImages(name, page) {
   try {
@@ -38,6 +29,8 @@ async function fetchImages(name, page) {
 
 async function eventHandler(ev) {
   ev.preventDefault();
+  clear(gallery);
+  page = 1;
   const {
     elements: { searchQuery },
   } = ev.currentTarget;
@@ -46,25 +39,28 @@ async function eventHandler(ev) {
   console.log(name);
   fetchImages(name, page)
     .then(name => {
-      console.log(name.hits.length);
-      console.log(name);
+      console.log(`Number of arrays: ${name.hits.length}`);
+      console.log(`Total hits: ${name.totalHits}`);
+      let totalPages = name.totalHits / perPage;
+      console.log(`Total pages: ${totalPages}`);
 
       if (name.hits.length > 0) {
         Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
         renderGallery(name);
-        page += 1;
-        console.log(page);
+        //page += 1;
+        console.log(`Current page: ${page}`);
         const lightbox = new SimpleLightbox('.gallery a', {});
 
-        if (page > 1) {
+        if (page <= totalPages) {
           loadBtn.addEventListener('click', () => {
             let name = searchQuery.value;
             console.log('load more images');
+            page += 1;
             fetchImages(name, page).then(name => {
               renderGallery(name);
               lightbox.refresh();
-              page += 1;
-              console.log(page);
+              //page += 1;
+              console.log(`Current page: ${page}`);
             });
           });
         }
