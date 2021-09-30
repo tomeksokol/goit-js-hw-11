@@ -80,7 +80,7 @@ async function eventHandler(ev) {
 
 searchForm.addEventListener('submit', eventHandler);
 
-//  ====== ADD ALERT ======= HIDDEN BTN======
+//  ====== ADD ALERT ======= HIDDEN BTN====== load
 
 function renderGallery(name) {
   const markup = name.hits
@@ -105,4 +105,5 @@ function renderGallery(name) {
     })
     .join('');
   gallery.insertAdjacentHTML('beforeend', markup);
+  //gallery.innerHTML(markup);
 }
