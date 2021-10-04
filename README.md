@@ -1,2 +1,2 @@
-JsHomework-10
-https://github.com/goitacademy/javascript-homework/blob/main/v2/10/README.pl.md
+JsHomework-11
+https://github.com/goitacademy/javascript-homework/blob/main/v2/11/README.pl.md
