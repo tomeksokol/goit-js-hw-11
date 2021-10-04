@@ -6,8 +6,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 import axios from 'axios';
 
-const searchgBox = document.querySelector('input');
-const searchBtn = document.querySelector('.search-btn');
 const searchForm = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
 const clear = elems => [...elems.children].forEach(div => div.remove());
@@ -15,7 +13,7 @@ const loadBtn = document.querySelector('.load-more');
 let perPage = 40;
 let page = 0;
 
-loadBtn.style.display = "none"
+loadBtn.style.display = 'none';
 
 async function fetchImages(name, page) {
   try {
@@ -31,7 +29,9 @@ async function fetchImages(name, page) {
 
 async function eventHandler(ev) {
   ev.preventDefault();
+  //ev.currentTarget.reset();
   clear(gallery);
+  loadBtn.style.display = 'none';
   page = 1;
   const {
     elements: { searchQuery },
@@ -45,7 +45,6 @@ async function eventHandler(ev) {
       console.log(`Total hits: ${name.totalHits}`);
       let totalPages = Math.ceil(name.totalHits / perPage);
       console.log(`Total pages: ${totalPages}`);
-      
 
       if (name.hits.length > 0) {
         Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
@@ -55,7 +54,7 @@ async function eventHandler(ev) {
         const lightbox = new SimpleLightbox('.gallery a', {});
 
         if (page < totalPages) {
-          loadBtn.style.display = "block";
+          loadBtn.style.display = 'block';
           loadBtn.addEventListener('click', () => {
             let name = searchQuery.value;
             console.log('load more images');
@@ -65,14 +64,16 @@ async function eventHandler(ev) {
               lightbox.refresh();
               console.log(`Current page: ${page}`);
               if (page >= totalPages) {
-                loadBtn.style.display = "none";
-                console.log("There are no more images");
+                loadBtn.style.display = 'none';
+                console.log('There are no more images');
+                Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
               }
             });
           });
         } else {
-          loadBtn.style.display = "none";
-          console.log("There are no more images");
+          loadBtn.style.display = 'none';
+          console.log('There are no more images');
+          Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
         }
       } else {
         Notiflix.Notify.failure(
