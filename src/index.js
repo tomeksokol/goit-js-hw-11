@@ -15,6 +15,8 @@ const loadBtn = document.querySelector('.load-more');
 let perPage = 40;
 let page = 0;
 
+loadBtn.style.display = "none"
+
 async function fetchImages(name, page) {
   try {
     const response = await axios.get(
@@ -41,8 +43,9 @@ async function eventHandler(ev) {
     .then(name => {
       console.log(`Number of arrays: ${name.hits.length}`);
       console.log(`Total hits: ${name.totalHits}`);
-      let totalPages = name.totalHits / perPage;
+      let totalPages = Math.ceil(name.totalHits / perPage);
       console.log(`Total pages: ${totalPages}`);
+      
 
       if (name.hits.length > 0) {
         Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
@@ -51,7 +54,8 @@ async function eventHandler(ev) {
         console.log(`Current page: ${page}`);
         const lightbox = new SimpleLightbox('.gallery a', {});
 
-        if (page <= totalPages) {
+        if (page < totalPages) {
+          loadBtn.style.display = "block";
           loadBtn.addEventListener('click', () => {
             let name = searchQuery.value;
             console.log('load more images');
@@ -59,10 +63,16 @@ async function eventHandler(ev) {
             fetchImages(name, page).then(name => {
               renderGallery(name);
               lightbox.refresh();
-              //page += 1;
               console.log(`Current page: ${page}`);
+              if (page >= totalPages) {
+                loadBtn.style.display = "none";
+                console.log("There are no more images");
+              }
             });
           });
+        } else {
+          loadBtn.style.display = "none";
+          console.log("There are no more images");
         }
       } else {
         Notiflix.Notify.failure(
