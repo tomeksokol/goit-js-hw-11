@@ -87,7 +87,6 @@ async function eventHandler(ev) {
 
 searchForm.addEventListener('submit', eventHandler);
 
-//  ====== ADD ALERT ======= HIDDEN BTN====== load
 
 function renderGallery(name) {
   const markup = name.hits
@@ -113,3 +112,12 @@ function renderGallery(name) {
     .join('');
   gallery.insertAdjacentHTML('beforeend', markup);
 }
+
+// const { height: cardHeight } = document
+//   .querySelector('.gallery')
+//   .firstElementChild.getBoundingClientRect();
+
+// window.scrollBy({
+//   top: cardHeight * 2,
+//   behavior: 'smooth',
+// });
