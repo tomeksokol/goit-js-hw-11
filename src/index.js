@@ -6,6 +6,8 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 import axios from 'axios';
 
+const searchingBox = document.querySelector(".searching-box");
+const upBtn = document.querySelector(".up-btn");
 const searchForm = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
 const clear = elems => [...elems.children].forEach(div => div.remove());
@@ -14,6 +16,7 @@ let perPage = 40;
 let page = 0;
 
 loadBtn.style.display = 'none';
+upBtn.style.display = "none";
 
 async function fetchImages(name, page) {
   try {
@@ -49,9 +52,15 @@ async function eventHandler(ev) {
       if (name.hits.length > 0) {
         Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
         renderGallery(name);
-        //page += 1;
         console.log(`Current page: ${page}`);
         const lightbox = new SimpleLightbox('.gallery a', {});
+        //smooth scrool to up
+        upBtn.style.display = "block";
+        upBtn.addEventListener("click", () => {
+          searchingBox.scrollIntoView({ 
+            behavior: 'smooth' 
+          });
+        })
 
         if (page < totalPages) {
           loadBtn.style.display = 'block';
@@ -61,6 +70,16 @@ async function eventHandler(ev) {
             page += 1;
             fetchImages(name, page).then(name => {
               renderGallery(name);
+              //smooth scroll
+              const { height: cardHeight } = document
+              .querySelector('.gallery')
+              .firstElementChild.getBoundingClientRect();
+
+              window.scrollBy({
+                top: cardHeight * 3,
+                behavior: 'smooth',
+              });
+              //===
               lightbox.refresh();
               console.log(`Current page: ${page}`);
               if (page >= totalPages) {
@@ -112,12 +131,3 @@ function renderGallery(name) {
     .join('');
   gallery.insertAdjacentHTML('beforeend', markup);
 }
-
-// const { height: cardHeight } = document
-//   .querySelector('.gallery')
-//   .firstElementChild.getBoundingClientRect();
-
-// window.scrollBy({
-//   top: cardHeight * 2,
-//   behavior: 'smooth',
-// });
