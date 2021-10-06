@@ -6,8 +6,8 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 import axios from 'axios';
 
-const searchingBox = document.querySelector(".searching-box");
-const upBtn = document.querySelector(".up-btn");
+const searchingBox = document.querySelector('.searching-box');
+const upBtn = document.querySelector('.up-btn');
 const searchForm = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
 const clear = elems => [...elems.children].forEach(div => div.remove());
@@ -16,7 +16,7 @@ let perPage = 40;
 let page = 0;
 
 loadBtn.style.display = 'none';
-upBtn.style.display = "none";
+upBtn.style.display = 'none';
 
 async function fetchImages(name, page) {
   try {
@@ -32,14 +32,13 @@ async function fetchImages(name, page) {
 
 async function eventHandler(ev) {
   ev.preventDefault();
-  //ev.currentTarget.reset();
   clear(gallery);
   loadBtn.style.display = 'none';
   page = 1;
   const {
     elements: { searchQuery },
   } = ev.currentTarget;
-  console.log(searchQuery.value);
+  //console.log(searchQuery.value);
   let name = searchQuery.value;
   console.log(name);
   fetchImages(name, page)
@@ -55,40 +54,46 @@ async function eventHandler(ev) {
         console.log(`Current page: ${page}`);
         const lightbox = new SimpleLightbox('.gallery a', {});
         //smooth scrool to up
-        upBtn.style.display = "block";
-        upBtn.addEventListener("click", () => {
-          searchingBox.scrollIntoView({ 
-            behavior: 'smooth' 
+        upBtn.style.display = 'block';
+        upBtn.addEventListener('click', () => {
+          searchingBox.scrollIntoView({
+            behavior: 'smooth',
           });
-        })
+        });
 
         if (page < totalPages) {
           loadBtn.style.display = 'block';
-          loadBtn.addEventListener('click', () => {
-            let name = searchQuery.value;
-            console.log('load more images');
-            page += 1;
-            fetchImages(name, page).then(name => {
-              renderGallery(name);
-              //smooth scroll
-              const { height: cardHeight } = document
-              .querySelector('.gallery')
-              .firstElementChild.getBoundingClientRect();
+          loadBtn.addEventListener(
+            'click',
+            () => {
+              name = searchQuery.value;
+              console.log('load more images');
+              page += 1;
+              fetchImages(name, page).then(name => {
+                renderGallery(name);
+                //smooth scroll
+                const { height: cardHeight } = document
+                  .querySelector('.gallery')
+                  .firstElementChild.getBoundingClientRect();
 
-              window.scrollBy({
-                top: cardHeight * 3,
-                behavior: 'smooth',
+                window.scrollBy({
+                  top: cardHeight * 2,
+                  behavior: 'smooth',
+                });
+                //===
+                lightbox.refresh();
+                console.log(`Current page: ${page}`);
+                if (page >= totalPages) {
+                  loadBtn.style.display = 'none';
+                  console.log('There are no more images');
+                  Notiflix.Notify.info(
+                    "We're sorry, but you've reached the end of search results.",
+                  );
+                }
               });
-              //===
-              lightbox.refresh();
-              console.log(`Current page: ${page}`);
-              if (page >= totalPages) {
-                loadBtn.style.display = 'none';
-                console.log('There are no more images');
-                Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
-              }
-            });
-          });
+            },
+            true,
+          );
         } else {
           loadBtn.style.display = 'none';
           console.log('There are no more images');
@@ -105,7 +110,6 @@ async function eventHandler(ev) {
 }
 
 searchForm.addEventListener('submit', eventHandler);
-
 
 function renderGallery(name) {
   const markup = name.hits
