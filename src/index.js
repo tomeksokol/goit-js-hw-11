@@ -7,13 +7,16 @@ import Notiflix from 'notiflix';
 import axios from 'axios';
 
 const searchingBox = document.querySelector('.searching-box');
+const searchQuery = document.querySelector('input[name="searchQuery"]');
 const upBtn = document.querySelector('.up-btn');
 const searchForm = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
 const clear = elems => [...elems.children].forEach(div => div.remove());
 const loadBtn = document.querySelector('.load-more');
+const lightbox = () => new SimpleLightbox('.gallery a', {});
 let perPage = 40;
 let page = 0;
+let name = searchQuery.value;
 
 loadBtn.style.display = 'none';
 upBtn.style.display = 'none';
@@ -21,7 +24,7 @@ upBtn.style.display = 'none';
 async function fetchImages(name, page) {
   try {
     const response = await axios.get(
-      `https://pixabay.com/api/?key=23580980-4f75151f85975025bb6074227&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`,
+      `https://pixabay.com/api/?key=23580980-4f75151f85975025bb6074227&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${perPage}`,
     );
     console.log(response);
     return response.data;
@@ -35,11 +38,7 @@ async function eventHandler(ev) {
   clear(gallery);
   loadBtn.style.display = 'none';
   page = 1;
-  const {
-    elements: { searchQuery },
-  } = ev.currentTarget;
-  //console.log(searchQuery.value);
-  let name = searchQuery.value;
+  name = searchQuery.value;
   console.log(name);
   fetchImages(name, page)
     .then(name => {
@@ -52,7 +51,8 @@ async function eventHandler(ev) {
         Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
         renderGallery(name);
         console.log(`Current page: ${page}`);
-        const lightbox = new SimpleLightbox('.gallery a', {});
+        lightbox();
+        //const lightbox = new SimpleLightbox('.gallery a', {});
         //smooth scrool to up
         upBtn.style.display = 'block';
         upBtn.addEventListener('click', () => {
@@ -63,37 +63,6 @@ async function eventHandler(ev) {
 
         if (page < totalPages) {
           loadBtn.style.display = 'block';
-          loadBtn.addEventListener(
-            'click',
-            () => {
-              name = searchQuery.value;
-              console.log('load more images');
-              page += 1;
-              fetchImages(name, page).then(name => {
-                renderGallery(name);
-                //smooth scroll
-                const { height: cardHeight } = document
-                  .querySelector('.gallery')
-                  .firstElementChild.getBoundingClientRect();
-
-                window.scrollBy({
-                  top: cardHeight * 2,
-                  behavior: 'smooth',
-                });
-                //===
-                lightbox.refresh();
-                console.log(`Current page: ${page}`);
-                if (page >= totalPages) {
-                  loadBtn.style.display = 'none';
-                  console.log('There are no more images');
-                  Notiflix.Notify.info(
-                    "We're sorry, but you've reached the end of search results.",
-                  );
-                }
-              });
-            },
-            true,
-          );
         } else {
           loadBtn.style.display = 'none';
           console.log('There are no more images');
@@ -135,3 +104,36 @@ function renderGallery(name) {
     .join('');
   gallery.insertAdjacentHTML('beforeend', markup);
 }
+
+loadBtn.addEventListener(
+  'click',
+  () => {
+    name = searchQuery.value;
+    console.log('load more images');
+    page += 1;
+    fetchImages(name, page).then(name => {
+      let totalPages = Math.ceil(name.totalHits / perPage);
+      renderGallery(name);
+      //smooth scroll
+      const { height: cardHeight } = document
+        .querySelector('.gallery')
+        .firstElementChild.getBoundingClientRect();
+
+      window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth',
+      });
+      //===
+      lightbox().refresh();
+      console.log(`Current page: ${page}`);
+
+      if (page >= totalPages) {
+        loadBtn.style.display = 'none';
+        console.log('There are no more images');
+        Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
+      }
+    });
+    //console.log("Load more button clicked");
+  },
+  true,
+);
