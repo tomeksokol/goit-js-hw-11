@@ -167,9 +167,16 @@ p {
   .info {
     font-size: 15px;
   }
+  input {
+    width: 240px;
+  }
 }
 
 @media screen and (min-width: 520px) {
+  input {
+    width: 260px;
+  }
+
   .gallery {
     grid-template-columns: 1fr 1fr;
   }
@@ -188,9 +195,15 @@ p {
   .info {
     font-size: 15px;
   }
+  input {
+    width: 280px;
+  }
 }
 
 @media screen and (min-width: 900px) {
+  input {
+    width: 300px;
+  }
   .gallery {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -204,6 +217,9 @@ p {
 }
 
 @media screen and (min-width: 1200px) {
+  input {
+    width: 320px;
+  }
   .gallery {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
